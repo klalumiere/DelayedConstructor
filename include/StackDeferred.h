@@ -55,7 +55,7 @@ public:
     }
     void construct(Type x) {
         assert(data == nullptr);
-        data = new(stackMemory) Type{std::move(x)};
+        data = new(&stackMemory) Type{std::move(x)};
     }
     void destruct() {
         if(data != nullptr) data->~Type();
@@ -67,7 +67,7 @@ public:
     }
 
 private:
-    typename std::aligned_storage<sizeof(Type), alignof(Type)>::type stackMemory[1];
+    typename std::aligned_storage<sizeof(Type), alignof(Type)>::type stackMemory;
     typename std::add_pointer<Type>::type data = nullptr;
 };
 
