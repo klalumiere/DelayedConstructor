@@ -40,10 +40,10 @@ Internally, it uses static allocated memory and placement new operator as memory
 Since **StackDeferred** can contains an object *or not*, it can be seen as a lightweight version of [Boost Optional](http://www.boost.org/doc/libs/1_61_0/libs/optional/doc/html/index.html),
 
 ```c++
-	const StackDeferred<const int> s00{};
-	const StackDeferred<const int> s11{42};
-	s00.isConstructed(); // Returns false;
-	s11.isConstructed(); // Returns true;
+	const StackDeferred<const int> s0{};
+	const StackDeferred<const int> s1{42};
+	s0.isConstructed(); // Returns false;
+	s1.isConstructed(); // Returns true;
 ```
 
 Errors are handled using *cassert*. For more information, look at [the unit tests (Google Test)](https://github.com/klalumiere/StackDeferred/blob/master/src/StackDeferred_tests.cpp) or at the [class source](https://github.com/klalumiere/StackDeferred/blob/master/include/StackDeferred.h).
