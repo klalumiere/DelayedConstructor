@@ -5,6 +5,17 @@ install:
   - wget --no-check-certificate https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz -O /tmp/cmake.tar.gz
   - tar -xvf /tmp/cmake.tar.gz
   - export PATH=$PWD/cmake-3.6.2-Linux-x86_64/bin/:$PATH
+  - git clone https://github.com/google/googletest
+  - cd googletest
+  - git checkout release-1.8.0
+  - mkdir myBuild
+  - cd myBuild
+  - cmake -DCMAKE_INSTALL_PREFIX=$PWD/myInstall ..
+  - export PATH=$PWD/myInstall:$PATH
+  - export CMAKE_PREFIX_PATH=$PWD/myInstall:$CMAKE_PREFIX_PATH
+  - make
+  - make install
+  - cd $INITIAL_DIR
 
 matrix:
   include:
@@ -14,14 +25,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - libgtest-dev
             - g++-5
       env: COMPILER=g++-5
     - compiler: clang
-      addons:
-        apt:
-          packages:
-            - libgtest-dev
       env: COMPILER=clang
 
 branches:
