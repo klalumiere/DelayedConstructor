@@ -33,9 +33,9 @@ matrix:
     - os: linux
       compiler: clang
       env: COMPILER=clang
-    - os: osx
-      compiler: clang
-      env: COMPILER=clang
+    # - os: osx
+    #   compiler: clang
+    #   env: COMPILER=clang
 
 branches:
   only:
