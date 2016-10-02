@@ -4,7 +4,8 @@ sudo: required
 dist: trusty
 
 before_install:
-  - sudo add-apt-repository ppa:george-edison55/cmake-3.x -y
+  - sudo deb http://ppa.launchpad.net/george-edison55/cmake-3.x/ubuntu xenial main 
+  - sudo deb-src http://ppa.launchpad.net/george-edison55/cmake-3.x/ubuntu xenial main 
   - sudo apt-get update -q
   - sudo apt-get install cmake -y
   - git clone https://github.com/google/googletest
