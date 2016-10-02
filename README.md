@@ -1,4 +1,7 @@
 # StackDeferred
+
+[![Build Status](https://travis-ci.org/klalumiere/StackDeferred.svg?branch=master)](https://travis-ci.org/klalumiere/StackDeferred/)
+
 C++11 class that defers the construction of an object while still using static memory allocation (i.e. the stack). In other words, this class is a simplified, single-object stack allocator.
 
 To use this class, simply download or copy-paste [the main header file](https://github.com/klalumiere/StackDeferred/blob/master/include/StackDeferred.h) and include it in your project.
