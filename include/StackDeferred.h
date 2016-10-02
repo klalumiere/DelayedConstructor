@@ -11,17 +11,26 @@ public:
     StackDeferred(Type x)
     { construct(std::move(x)); }
     StackDeferred(const StackDeferred<Type> &rhs) {
-        if(rhs.data != nullptr) construct(*data);
+        if(rhs.data != nullptr) construct(*rhs.data);
     }
-    StackDeferred(StackDeferred<Type> &&rhs) noexcept = default;
+    StackDeferred(StackDeferred<Type> &&rhs) {
+        if(rhs.data != nullptr) construct(std::move(*rhs.data));
+    }
     ~StackDeferred() {
         destruct();
     }
     StackDeferred &operator=(const StackDeferred<Type> &rhs) {
-        if(rhs.data != nullptr) construct(*data);
+        if(&rhs == this) return *this;
+        destruct();
+        if(rhs.data != nullptr) construct(*rhs.data);
         return *this;
     }
-    StackDeferred &operator=(StackDeferred<Type> &&rhs) noexcept = default;
+    StackDeferred &operator=(StackDeferred<Type> &&rhs) {
+        if(&rhs == this) return *this;
+        destruct();
+        if(rhs.data != nullptr) construct(std::move(*rhs.data));
+        return *this;
+    }
     void construct(Type x) {
         assert(data == nullptr);
         data = new(stackMemory) Type{std::move(x)};

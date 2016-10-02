@@ -12,6 +12,7 @@ public:
     const int intValue = 3;
     const int tempObjectDestroyed = 1;
     const int stackDeferredDestroyed = 1;
+    const StackDeferred<const int> s0{intValue};
 };
 
 
@@ -19,8 +20,7 @@ TEST_F(StackDeferredTests, emptyConstructor) {
     const StackDeferred<const int> s{};
 }
 TEST_F(StackDeferredTests, get) {
-    const StackDeferred<const int> s(intValue);
-    EXPECT_EQ(intValue,s.get());
+    EXPECT_EQ(intValue,s0.get());
 }
 TEST_F(StackDeferredTests, construct) {
     StackDeferred<const int> s;
@@ -38,7 +38,7 @@ TEST_F(StackDeferredTests, constructTwice) {
     StackDeferred<const int> s;
     s.construct(intValue);
     s.destruct();
-    const int newValue = 42;
+    const int newValue = intValue + 1;
     s.construct(newValue);
     EXPECT_EQ(newValue,s.get());
 }
@@ -63,4 +63,32 @@ TEST_F(StackDeferredTests, classWithInheritance) {
     const StackDeferred<Derived> s(Derived{});
     EXPECT_EQ(expected.baseVal,s.get().baseVal);
     EXPECT_EQ(expected.derivedVal,s.get().derivedVal);
+}
+TEST_F(StackDeferredTests, copyConstructor) {
+    const StackDeferred<const int> s1(s0);
+    EXPECT_EQ(intValue,s1.get());
+}
+TEST_F(StackDeferredTests, moveConstructor) {
+    const StackDeferred<const int> s1(std::move(s0));
+    EXPECT_EQ(intValue,s1.get());
+}
+TEST_F(StackDeferredTests, assignment) {
+    StackDeferred<const int> s1(intValue+1);
+    s1 = s0;
+    EXPECT_EQ(intValue,s1.get());
+}
+TEST_F(StackDeferredTests, selfAssignment) {
+    StackDeferred<const int> s1(s0);
+    s1 = s1;
+    EXPECT_EQ(intValue,s1.get());
+}
+TEST_F(StackDeferredTests, moveAssignment) {
+    StackDeferred<const int> s1(intValue+1);
+    s1 = std::move(s0);
+    EXPECT_EQ(intValue,s1.get());
+}
+TEST_F(StackDeferredTests, selfMoveAssignment) {
+    StackDeferred<const int> s1(s0);
+    s1 = std::move(s1);
+    EXPECT_EQ(intValue,s1.get());
 }
