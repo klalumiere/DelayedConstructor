@@ -42,8 +42,15 @@ Since **StackDeferred** can contains an object *or not*, it can be seen as a lig
 ```c++
 	const StackDeferred<const int> s0{};
 	const StackDeferred<const int> s1{42};
-	s0.isConstructed(); // Returns false;
-	s1.isConstructed(); // Returns true;
+	s0.isConstructed(); // Returns false
+	s1.isConstructed(); // Returns true
+```
+
+A factory function similar to [std::make_pair](http://en.cppreference.com/w/cpp/utility/pair/make_pair) is also included,
+
+```c++
+	const auto s = make_StackDeferred(42);
+    s.get(); // Returns 42
 ```
 
 Errors are handled using *cassert*. For more information, look at [the unit tests (Google Test)](https://github.com/klalumiere/StackDeferred/blob/master/src/StackDeferred_tests.cpp) or at the [class source](https://github.com/klalumiere/StackDeferred/blob/master/include/StackDeferred.h).

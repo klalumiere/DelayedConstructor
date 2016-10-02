@@ -74,4 +74,9 @@ private:
     typename std::add_pointer<Type>::type data = nullptr;
 };
 
+template<class Type>
+StackDeferred<Type> make_StackDeferred(Type x) {
+    return StackDeferred<Type>{std::move(x)};
+}
+
 #endif  /* STACKDEFERRED_H */

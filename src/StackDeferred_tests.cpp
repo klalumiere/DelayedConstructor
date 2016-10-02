@@ -9,7 +9,7 @@ public:
         int &callCount;
     };
 
-    const int intValue = 3;
+    const int intValue = 42;
     const int tempObjectDestroyed = 1;
     const int stackDeferredDestroyed = 1;
     const StackDeferred<const int> s0{intValue};
@@ -96,4 +96,8 @@ TEST_F(StackDeferredTests, isConstructed) {
     const StackDeferred<const int> s{};
     EXPECT_FALSE(s.isConstructed());
     EXPECT_TRUE(s0.isConstructed());
+}
+TEST_F(StackDeferredTests, make_StackDeferred) {
+    const auto s = make_StackDeferred(intValue);
+    EXPECT_EQ(intValue,s.get());
 }
