@@ -6,8 +6,12 @@ matrix:
       compiler: clang
       addons:
       apt:
-        sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.8', 'kalakris-cmake']
-        packages: ['clang-3.8', 'cmake']
+        sources:
+          -llvm-toolchain-precise-3.8
+          -george-edison55/cmake-3.5
+        packages:
+          -clang-3.8
+          -cmake
       env: COMPILER=clang++-3.8
 
 branches:
