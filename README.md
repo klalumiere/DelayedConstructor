@@ -18,7 +18,7 @@ In c++, the typical way to control *when* an object is built and destroyed is to
 	ptr.reset();
 ```
 
-Unfortunately, pointers do not come with value semantics (we can only move *std::unique_ptr*). Moreover, it is usually more efficient, for small objects, to use static allocated memory (the *stack*) than dynamic allocated memory (the *heap*). **StackDeferred** aims to solve these problems. It is straightforward to use,
+Unfortunately, pointers do not come with value semantics. Moreover, it is usually more efficient, for small objects, to use static allocated memory (the *stack*) than dynamic allocated memory (the *heap*). **StackDeferred** aims to solve these problems. It is straightforward to use,
 
 ```c++
 	StackDeferred<const int> s;
