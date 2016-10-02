@@ -16,23 +16,23 @@ public:
 
 
 TEST_F(StackDeferredTests, emptyConstructor) {
-	const StackDeferred<const int> s{};
+    const StackDeferred<const int> s{};
 }
 TEST_F(StackDeferredTests, get) {
-	const StackDeferred<const int> s(intValue);
-	EXPECT_EQ(intValue,s.get());
+    const StackDeferred<const int> s(intValue);
+    EXPECT_EQ(intValue,s.get());
 }
 TEST_F(StackDeferredTests, construct) {
-	StackDeferred<const int> s;
-	s.construct(intValue);
-	EXPECT_EQ(intValue,s.get());
+    StackDeferred<const int> s;
+    s.construct(intValue);
+    EXPECT_EQ(intValue,s.get());
 }
 TEST_F(StackDeferredTests, destruct) {
-	int callCount = 0;
-	StackDeferred<Destructed> s;
-	s.construct(Destructed{callCount});
-	s.destruct();
-	EXPECT_EQ(tempObjectDestroyed + stackDeferredDestroyed,callCount);
+    int callCount = 0;
+    StackDeferred<Destructed> s;
+    s.construct(Destructed{callCount});
+    s.destruct();
+    EXPECT_EQ(tempObjectDestroyed + stackDeferredDestroyed,callCount);
 }
 TEST_F(StackDeferredTests, constructTwice) {
     StackDeferred<const int> s;
@@ -51,16 +51,16 @@ TEST_F(StackDeferredTests, destructOutOfScope) {
     EXPECT_EQ(tempObjectDestroyed + stackDeferredDestroyed,callCount);
 }
 TEST_F(StackDeferredTests, classWithInheritance) {
-	struct Base {
-		virtual ~Base() {}
-		int baseVal = 3;
-	};
-	struct Derived : Base {
-		double derivedVal = 2.3;
-	};
+    struct Base {
+        virtual ~Base() {}
+        int baseVal = 3;
+    };
+    struct Derived : Base {
+        double derivedVal = 2.3;
+    };
 
-	const Derived expected{};
-	const StackDeferred<Derived> s(Derived{});
-	EXPECT_EQ(expected.baseVal,s.get().baseVal);
-	EXPECT_EQ(expected.derivedVal,s.get().derivedVal);
+    const Derived expected{};
+    const StackDeferred<Derived> s(Derived{});
+    EXPECT_EQ(expected.baseVal,s.get().baseVal);
+    EXPECT_EQ(expected.derivedVal,s.get().derivedVal);
 }
