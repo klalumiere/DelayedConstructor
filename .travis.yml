@@ -8,13 +8,15 @@ before_install:
   - sudo apt-get update -q
   - sudo apt-get install cmake -y
   - git clone https://github.com/google/googletest
+  - pwd
   - cd googletest
   - mkdir myBuild
   - cd myBuild
   - cmake ..
   - make
   - sudo make install
-  - cd ~
+  - cd $HOME
+  - pwd
 
 compiler: clang
 
