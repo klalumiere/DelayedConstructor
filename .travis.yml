@@ -15,7 +15,7 @@ before_install:
   - cmake ..
   - make
   - sudo make install
-  - cd $HOME
+  - cd ../..
   - pwd
 
 compiler: clang
