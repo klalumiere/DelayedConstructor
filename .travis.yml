@@ -1,10 +1,5 @@
 language: cpp
 
-addons:
-  apt:
-    packages:
-      - libgtest-dev
-
 install:
   - export INITIAL_DIR=$PWD
   - wget --no-check-certificate https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz -O /tmp/cmake.tar.gz
@@ -19,9 +14,14 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
+            - libgtest-dev
             - g++-5
       env: COMPILER=g++-5
     - compiler: clang
+      addons:
+        apt:
+          packages:
+            - libgtest-dev
       env: COMPILER=clang
 
 branches:
