@@ -25,7 +25,7 @@ Unfortunately, pointers do not come with value semantics (we can only move *std:
     s.destruct();
 ```
 
-Internally, it uses stack memory and placement new operator as memory management strategy,
+Internally, it uses static allocated memory and placement new operator as memory management strategy,
 
 ```c++
 	void construct(Type x) {
