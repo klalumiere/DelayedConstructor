@@ -9,8 +9,8 @@ before_install:
   - sudo apt-get install cmake -y
   - git clone https://github.com/google/googletest
   - cd googletest
-  - mkdir build
-  - cd build
+  - mkdir myBuild
+  - cd myBuild
   - cmake ..
   - make
   - sudo make install
