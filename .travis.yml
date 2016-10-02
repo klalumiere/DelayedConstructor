@@ -7,6 +7,7 @@ install:
   - export PATH=$PWD/cmake-3.6.2-Linux-x86_64/bin/:$PATH
   - git clone https://github.com/google/googletest
   - cd googletest
+  - git checkout release-1.8.0
   - mkdir myBuild
   - cd myBuild
   - cmake -DCMAKE_INSTALL_PREFIX=$PWD/myInstall ..
@@ -18,6 +19,7 @@ install:
 
 compiler:
   - clang
+  - gcc
 
 branches:
   only:
