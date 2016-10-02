@@ -92,3 +92,8 @@ TEST_F(StackDeferredTests, selfMoveAssignment) {
     s1 = std::move(s1);
     EXPECT_EQ(intValue,s1.get());
 }
+TEST_F(StackDeferredTests, isConstructed) {
+    const StackDeferred<const int> s{};
+    EXPECT_FALSE(s.isConstructed());
+    EXPECT_TRUE(s0.isConstructed());
+}

@@ -33,10 +33,10 @@ public:
     StackDeferred(Type x)
     { construct(std::move(x)); }
     StackDeferred(const StackDeferred<Type> &rhs) {
-        if(rhs.data != nullptr) construct(*rhs.data);
+        if(rhs.isConstructed()) construct(*rhs.data);
     }
     StackDeferred(StackDeferred<Type> &&rhs) {
-        if(rhs.data != nullptr) construct(std::move(*rhs.data));
+        if(rhs.isConstructed()) construct(std::move(*rhs.data));
     }
     ~StackDeferred() {
         destruct();
@@ -44,26 +44,29 @@ public:
     StackDeferred &operator=(const StackDeferred<Type> &rhs) {
         if(&rhs == this) return *this;
         destruct();
-        if(rhs.data != nullptr) construct(*rhs.data);
+        if(rhs.isConstructed()) construct(*rhs.data);
         return *this;
     }
     StackDeferred &operator=(StackDeferred<Type> &&rhs) {
         if(&rhs == this) return *this;
         destruct();
-        if(rhs.data != nullptr) construct(std::move(*rhs.data));
+        if(rhs.isConstructed()) construct(std::move(*rhs.data));
         return *this;
     }
     void construct(Type x) {
-        assert(data == nullptr);
+        assert(!isConstructed());
         data = new(&stackMemory) Type{std::move(x)};
     }
     void destruct() {
-        if(data != nullptr) data->~Type();
+        if(isConstructed()) data->~Type();
         data = nullptr;
     }
     Type &get() const {
-        assert(data != nullptr);
+        assert(isConstructed());
         return *data;
+    }
+    bool isConstructed() const {
+        return data != nullptr;
     }
 
 private:
