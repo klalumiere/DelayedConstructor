@@ -3,9 +3,8 @@ language: cpp
 install:
   - export INITIAL_DIR=$PWD
   - echo ========== INSTALLING CMAKE 3.6 ==========
-  - wget --no-check-certificate https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz -O /tmp/cmake.tar.gz
-  - tar -xvf /tmp/cmake.tar.gz
-  - export PATH=$PWD/cmake-3.6.2-Linux-x86_64/bin/:$PATH
+  - python .download_cmake_travis.py
+  - source cmakeEnv.sh
   - echo ========== BUILDING AND INSTALLING GOOGLE TEST ==========
   - git clone https://github.com/google/googletest
   - cd googletest
@@ -29,10 +28,14 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-      env: COMPILER=g++-5
+      env:
+        - COMPILER=g++-5
+        - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Linux-x86_64
     - os: linux
       compiler: clang
-      env: COMPILER=clang
+      env:
+        - COMPILER=clang
+        - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Linux-x86_64
     # - os: osx
     #   compiler: clang
     #   env: COMPILER=clang
