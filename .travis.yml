@@ -19,6 +19,7 @@ matrix:
       env:
         - COMPILER=g++-5
         - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Linux-x86_64
+        - BIN_LOCATION_CMAKE=bin
     - os: linux
       compiler: clang
       env:
