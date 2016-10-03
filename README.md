@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/klalumiere/StaticConstructor.svg?branch=master)](https://travis-ci.org/klalumiere/StaticConstructor/)
 
-C++11 class that defers the construction of an object while still using static memory allocation (i.e. the stack). In other words, this class is a simplified, single-object stack allocator.
+C++11 class that defers the *construction* of an object while still using *static* memory allocation (i.e. the stack). In other words, this class is a simplified, single-object stack allocator.
 
 To use this class, simply download or copy-paste [the main header file](https://github.com/klalumiere/StaticConstructor/blob/master/include/StaticConstructor.h) and include it in your project.
 
@@ -40,7 +40,7 @@ Internally, it uses static allocated memory and placement new operator as memory
     typename std::add_pointer<Type>::type data = nullptr;
 ```
 
-Since **StaticConstructor** can contains an object *or not*, it can be seen as a lightweight version of [Boost Optional](http://www.boost.org/doc/libs/1_61_0/libs/optional/doc/html/index.html),
+Since **StaticConstructor** can contain an object *or not*, it can be seen as a lightweight version of [Boost Optional](http://www.boost.org/doc/libs/1_61_0/libs/optional/doc/html/index.html),
 
 ```c++
 	const StaticConstructor<const int> s0{};
@@ -48,6 +48,8 @@ Since **StaticConstructor** can contains an object *or not*, it can be seen as a
 	s0.isConstructed(); // Returns false
 	s1.isConstructed(); // Returns true
 ```
+
+It is important to notice that **it is not mandatory to call the destruct() function** when an object has been constructed. In the example above, the destructor of **const int** will be called automatically when **s1** reaches the end of its scope. If you were to call **s1.destruct()** explicitly, nothing would happen at the end of the scope of **s1** so that the destructor of **const int** is always called once and only once, just like it is with value semantics objects.
 
 A factory function similar to [std::make_pair](http://en.cppreference.com/w/cpp/utility/pair/make_pair) is also included,
 
