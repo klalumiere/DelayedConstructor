@@ -43,3 +43,4 @@ before_script:
   - cmake -DCMAKE_CXX_COMPILER=$COMPILER ..
 
 script: make all test
+
