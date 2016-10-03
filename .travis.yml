@@ -3,10 +3,8 @@ language: cpp
 install:
   - python .install_cmake_travis.py
   - source cmakeEnv.sh
-  - echo $PATH
   - python .build_googletest_travis.py
   - source googletestEnv.sh
-  - echo $PATH
 
 matrix:
   include:
@@ -26,11 +24,13 @@ matrix:
       env:
         - COMPILER=clang
         - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Linux-x86_64
+        - BIN_LOCATION_CMAKE=bin
     - os: osx
       compiler: clang
       env:
         - COMPILER=clang
         - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Darwin-x86_64
+        - BIN_LOCATION_CMAKE=CMake.app/Contents/bin
 
 branches:
   only:

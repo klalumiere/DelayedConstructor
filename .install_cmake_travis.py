@@ -10,6 +10,8 @@ outputCmake = "/tmp/cmake.tar.gz";
 subprocess.call(["wget","--no-check-certificate",
 	"https://cmake.org/files/v3.6/"+archiveName+".tar.gz","-O",outputCmake])
 subprocess.call(["tar","-xvf",outputCmake])
+
+cmakeBinLocation = os.environ['BIN_LOCATION_CMAKE']
 f = open("cmakeEnv.sh", 'w')
-f.write("export PATH="+fullProjectDir+"/"+archiveName+"/bin/:$PATH\n")
+f.write("export PATH="+fullProjectDir+"/"+archiveName+"/" + cmakeBinLocation + ":$PATH\n")
 f.close()
