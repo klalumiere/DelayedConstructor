@@ -20,34 +20,34 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-#ifndef STACKDEFERRED_H
-#define STACKDEFERRED_H
+#ifndef STATICCONSTRUCTOR_H
+#define STATICCONSTRUCTOR_H
 
 #include <cassert>
 #include <type_traits>
 
 template<class Type>
-class StackDeferred {
+class StaticConstructor {
 public:
-    StackDeferred() = default;
-    StackDeferred(Type x)
+    StaticConstructor() = default;
+    StaticConstructor(Type x)
     { construct(std::move(x)); }
-    StackDeferred(const StackDeferred<Type> &rhs) {
+    StaticConstructor(const StaticConstructor<Type> &rhs) {
         if(rhs.isConstructed()) construct(*rhs.data);
     }
-    StackDeferred(StackDeferred<Type> &&rhs) {
+    StaticConstructor(StaticConstructor<Type> &&rhs) {
         if(rhs.isConstructed()) construct(std::move(*rhs.data));
     }
-    ~StackDeferred() {
+    ~StaticConstructor() {
         destruct();
     }
-    StackDeferred &operator=(const StackDeferred<Type> &rhs) {
+    StaticConstructor &operator=(const StaticConstructor<Type> &rhs) {
         if(&rhs == this) return *this;
         destruct();
         if(rhs.isConstructed()) construct(*rhs.data);
         return *this;
     }
-    StackDeferred &operator=(StackDeferred<Type> &&rhs) {
+    StaticConstructor &operator=(StaticConstructor<Type> &&rhs) {
         if(&rhs == this) return *this;
         destruct();
         if(rhs.isConstructed()) construct(std::move(*rhs.data));
@@ -75,8 +75,8 @@ private:
 };
 
 template<class Type>
-StackDeferred<Type> make_StackDeferred(Type x) {
-    return StackDeferred<Type>{std::move(x)};
+StaticConstructor<Type> make_StaticConstructor(Type x) {
+    return StaticConstructor<Type>{std::move(x)};
 }
 
-#endif  /* STACKDEFERRED_H */
+#endif  /* STATICCONSTRUCTOR_H */
