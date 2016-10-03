@@ -1,4 +1,7 @@
 # StackDeferred
+
+[![Build Status](https://travis-ci.org/klalumiere/StackDeferred.svg?branch=master)](https://travis-ci.org/klalumiere/StackDeferred/)
+
 C++11 class that defers the construction of an object while still using static memory allocation (i.e. the stack). In other words, this class is a simplified, single-object stack allocator.
 
 To use this class, simply download or copy-paste [the main header file](https://github.com/klalumiere/StackDeferred/blob/master/include/StackDeferred.h) and include it in your project.
@@ -15,7 +18,7 @@ In c++, the typical way to control *when* an object is built and destroyed is to
 	ptr.reset();
 ```
 
-Unfortunately, pointers do not come with value semantics (we can only move *std::unique_ptr*). Moreover, it is usually more efficient, for small objects, to use static allocated memory (the *stack*) than dynamic allocated memory (the *heap*). **StackDeferred** aims to solve these problems. It is straightforward to use,
+Unfortunately, pointers do not come with value semantics. Moreover, it is usually more efficient, for small objects, to use static allocated memory (the *stack*) than dynamic allocated memory (the *heap*). **StackDeferred** aims to solve these problems. It is straightforward to use,
 
 ```c++
 	StackDeferred<const int> s;

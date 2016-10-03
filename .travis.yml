@@ -1,0 +1,45 @@
+language: cpp
+
+install:
+  - python .install_cmake_travis.py
+  - source cmakeEnv.sh
+  - python .build_googletest_travis.py
+  - source googletestEnv.sh
+
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+        - COMPILER=g++-5
+        - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Linux-x86_64
+        - BIN_LOCATION_CMAKE=bin
+    - os: linux
+      compiler: clang
+      env:
+        - COMPILER=clang
+        - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Linux-x86_64
+        - BIN_LOCATION_CMAKE=bin
+    - os: osx
+      compiler: clang
+      env:
+        - COMPILER=clang
+        - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Darwin-x86_64
+        - BIN_LOCATION_CMAKE=CMake.app/Contents/bin
+
+branches:
+  only:
+  - master
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER ..
+
+script: make all test
