@@ -11,5 +11,5 @@ subprocess.call(["wget","--no-check-certificate",
 	"https://cmake.org/files/v3.6/"+archiveName+".tar.gz","-O",outputCmake])
 subprocess.call(["tar","-xvf",outputCmake])
 f = open("cmakeEnv.sh", 'w')
-f.write("export PATH="+fullProjectDir+"/"+archiveName+"/bin/:$PATH")
+f.write("export PATH="+fullProjectDir+"/"+archiveName+"/bin/:$PATH\n")
 f.close()

@@ -1,22 +1,12 @@
 language: cpp
 
 install:
-  - export INITIAL_DIR=$PWD
-  - echo ========== INSTALLING CMAKE 3.6 ==========
-  - python .download_cmake_travis.py
+  - python .install_cmake_travis.py
   - source cmakeEnv.sh
-  - echo ========== BUILDING AND INSTALLING GOOGLE TEST ==========
-  - git clone https://github.com/google/googletest
-  - cd googletest
-  - git checkout release-1.8.0
-  - mkdir myBuild
-  - cd myBuild
-  - cmake -DCMAKE_INSTALL_PREFIX=$PWD/myInstall ..
-  - export PATH=$PWD/myInstall:$PATH
-  - export CMAKE_PREFIX_PATH=$PWD/myInstall:$CMAKE_PREFIX_PATH
-  - make
-  - make install
-  - cd $INITIAL_DIR
+  - echo $PATH
+  - python .build_googletest_travis.py
+  - source googletestEnv.sh
+  - echo $PATH
 
 matrix:
   include:
