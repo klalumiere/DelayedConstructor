@@ -36,9 +36,11 @@ matrix:
       env:
         - COMPILER=clang
         - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Linux-x86_64
-    # - os: osx
-    #   compiler: clang
-    #   env: COMPILER=clang
+    - os: osx
+      compiler: clang
+      env:
+        - COMPILER=clang
+        - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Darwin-x86_64
 
 branches:
   only:
