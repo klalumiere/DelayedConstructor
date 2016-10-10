@@ -34,7 +34,7 @@ public:
     template<class FirstArgumentType, typename std::enable_if<!std::is_same<StaticConstructor<Type>,
             typename std::remove_cv<typename std::remove_reference<FirstArgumentType>::type>::type>::value,
         bool>::type = true, typename... Args>
-    StaticConstructor(FirstArgumentType&& x, Args&&... args)
+    explicit StaticConstructor(FirstArgumentType&& x, Args&&... args)
     { construct(std::forward<FirstArgumentType>(x),std::forward<Args>(args)...); }
     StaticConstructor(const StaticConstructor<Type> &rhs) {
         if(rhs.isConstructed()) construct(*rhs.data);
