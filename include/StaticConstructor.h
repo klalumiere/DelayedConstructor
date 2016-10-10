@@ -24,6 +24,7 @@ SOFTWARE. */
 #define STATICCONSTRUCTOR_H
 
 #include <cassert>
+#include <utility>
 #include <type_traits>
 
 template<class Type>
@@ -75,7 +76,7 @@ private:
 };
 
 template<class Type>
-StaticConstructor<Type> make_StaticConstructor(Type x) {
+inline StaticConstructor<Type> make_StaticConstructor(Type x) {
     return StaticConstructor<Type>{std::move(x)};
 }
 
