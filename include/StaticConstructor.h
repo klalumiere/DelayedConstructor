@@ -31,8 +31,11 @@ template<class Type>
 class StaticConstructor {
 public:
     StaticConstructor() = default;
-    StaticConstructor(Type x)
-    { construct(std::move(x)); }
+    template<class FirstArgumentType, typename std::enable_if<!std::is_same<StaticConstructor<Type>,
+            typename std::remove_cv<typename std::remove_reference<FirstArgumentType>::type>::type>::value,
+        bool>::type = true, typename... Args>
+    StaticConstructor(FirstArgumentType&& x, Args&&... args)
+    { construct(std::forward<FirstArgumentType>(x),std::forward<Args>(args)...); }
     StaticConstructor(const StaticConstructor<Type> &rhs) {
         if(rhs.isConstructed()) construct(*rhs.data);
     }
@@ -76,9 +79,9 @@ private:
     typename std::add_pointer<Type>::type data = nullptr;
 };
 
-template<class Type>
-inline StaticConstructor<Type> make_StaticConstructor(Type x) {
-    return StaticConstructor<Type>{std::move(x)};
+template<class Type, typename... Args>
+inline StaticConstructor<Type> make_StaticConstructor(Args&&... args) {
+    return StaticConstructor<Type>{std::forward<Args>(args)...};
 }
 
 #endif  /* STATICCONSTRUCTOR_H */

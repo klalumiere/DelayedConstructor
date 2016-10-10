@@ -70,7 +70,8 @@ TEST_F(StaticConstructorTests, copyConstructor) {
     EXPECT_EQ(intValue,s1.get());
 }
 TEST_F(StaticConstructorTests, moveConstructor) {
-    const StaticConstructor<const int> s1(std::move(s0));
+    StaticConstructor<const int> sToMove{intValue};
+    const StaticConstructor<const int> s1(std::move(sToMove));
     EXPECT_EQ(intValue,s1.get());
 }
 TEST_F(StaticConstructorTests, assignment) {
@@ -99,10 +100,15 @@ TEST_F(StaticConstructorTests, isConstructed) {
     EXPECT_TRUE(s0.isConstructed());
 }
 TEST_F(StaticConstructorTests, make_StaticConstructor) {
-    const auto s = make_StaticConstructor(intValue);
+    const auto s = make_StaticConstructor<const int>(intValue);
     EXPECT_EQ(intValue,s.get());
 }
 TEST_F(StaticConstructorTests, canHostAtomicConstruct) {
-    StaticConstructor<std::atomic<char>> s;
-    s.construct('s');
+    StaticConstructor<std::atomic<int>> s;
+    s.construct(intValue);
+    EXPECT_EQ(intValue,s.get());
+}
+TEST_F(StaticConstructorTests, canHostAtomicConstructor) {
+    StaticConstructor<std::atomic<int>> s{intValue};
+    EXPECT_EQ(intValue,s.get());
 }
