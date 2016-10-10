@@ -31,9 +31,10 @@ Unfortunately, pointers do not come with value semantics. Moreover, it is usuall
 Internally, it uses automatic allocated memory and placement new operator as memory management strategy,
 
 ```c++
-	void construct(Type x) {
+    template<typename... Args>
+    void construct(Args&&... args) {
         /** ... **/
-        data = new(&stackMemory) Type{std::move(x)};
+        data = new(&stackMemory) Type{std::forward<Args>(args)...};
     }
     /** ... **/
     typename std::aligned_storage<sizeof(Type), alignof(Type)>::type stackMemory;
