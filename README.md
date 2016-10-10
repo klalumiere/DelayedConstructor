@@ -50,7 +50,18 @@ Since **StaticConstructor** can contain an object *or not*, it can be seen as a 
 	s1.isConstructed(); // Returns true
 ```
 
-It is important to notice that **it is not mandatory to call the destruct() function** when an object has been constructed. In the example above, the destructor of **const int** will be called automatically when **s1** reaches the end of its scope. If you were to call **s1.destruct()** explicitly, nothing would happen at the end of the scope of **s1** so that the destructor of **const int** is always called once and only once, just like it is with value semantics objects.
+It is important to notice that **it is not mandatory to call the destruct() function** when an object has been constructed. In the example above, the destructor of **const int** will be called automatically when **s1** reaches the end of its scope. If you were to call **s1.destruct()** explicitly, nothing would happen at the end of the scope of **s1** so that the destructor of **const int** is always called once and only once, just like it is with value semantics objects,
+
+```c++
+	~StaticConstructor() {
+        destruct();
+    }
+    /** ... **/
+    void destruct() {
+        if(isConstructed()) data->~Type();
+        data = nullptr;
+    }
+```
 
 A factory function similar to [std::make_pair](http://en.cppreference.com/w/cpp/utility/pair/make_pair) is also included,
 
@@ -60,3 +71,5 @@ A factory function similar to [std::make_pair](http://en.cppreference.com/w/cpp/
 ```
 
 Errors are handled using *cassert*. For more information, look at [the unit tests (Google Test)](https://github.com/klalumiere/StaticConstructor/blob/master/src/StaticConstructor_tests.cpp) or at the [class source](https://github.com/klalumiere/StaticConstructor/blob/master/include/StaticConstructor.h).
+
+[Discussion about this class on reddit](https://www.reddit.com/r/cpp/comments/56pccl/c11_class_that_defers_the_construction_of_an/)
