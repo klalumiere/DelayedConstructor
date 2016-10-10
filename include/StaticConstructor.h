@@ -54,9 +54,10 @@ public:
         if(rhs.isConstructed()) construct(std::move(*rhs.data));
         return *this;
     }
-    void construct(Type x) {
+    template<typename... Args>
+    void construct(Args&&... args) {
         assert(!isConstructed());
-        data = new(&stackMemory) Type{std::move(x)};
+        data = new(&stackMemory) Type{std::forward<Args>(args)...};
     }
     void destruct() {
         if(isConstructed()) data->~Type();

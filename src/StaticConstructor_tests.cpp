@@ -1,3 +1,4 @@
+#include <atomic>
 #include "gtest/gtest.h"
 #include "StaticConstructor.h"
 
@@ -100,4 +101,8 @@ TEST_F(StaticConstructorTests, isConstructed) {
 TEST_F(StaticConstructorTests, make_StaticConstructor) {
     const auto s = make_StaticConstructor(intValue);
     EXPECT_EQ(intValue,s.get());
+}
+TEST_F(StaticConstructorTests, canHostAtomicConstruct) {
+    StaticConstructor<std::atomic<char>> s;
+    s.construct('s');
 }
