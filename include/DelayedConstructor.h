@@ -20,8 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-#ifndef STATICCONSTRUCTOR_H
-#define STATICCONSTRUCTOR_H
+#ifndef DELAYEDCONSTRUCTOR_H
+#define DELAYEDCONSTRUCTOR_H
 
 #include <cassert>
 #include <utility>
@@ -80,8 +80,8 @@ private:
 };
 
 template<class Type, typename... Args>
-inline DelayedConstructor<Type> make_DelayedConstructor(Args&&... args) {
+inline DelayedConstructor<Type> makeDelayedConstructor(Args&&... args) {
     return DelayedConstructor<Type>{std::forward<Args>(args)...};
 }
 
-#endif  /* STATICCONSTRUCTOR_H */
+#endif  /* DELAYEDCONSTRUCTOR_H */

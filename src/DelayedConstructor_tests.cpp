@@ -99,8 +99,8 @@ TEST_F(DelayedConstructorTests, isConstructed) {
     EXPECT_FALSE(s.isConstructed());
     EXPECT_TRUE(s0.isConstructed());
 }
-TEST_F(DelayedConstructorTests, make_DelayedConstructor) {
-    const auto s = make_DelayedConstructor<const int>(intValue);
+TEST_F(DelayedConstructorTests, makeDelayedConstructor) {
+    const auto s = makeDelayedConstructor<const int>(intValue);
     EXPECT_EQ(intValue,s.get());
 }
 TEST_F(DelayedConstructorTests, canHostAtomicConstruct) {
