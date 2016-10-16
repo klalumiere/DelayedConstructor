@@ -66,7 +66,7 @@ It is important to notice that **it is not mandatory to call the destruct() func
 A factory function similar to [std::make_pair](http://en.cppreference.com/w/cpp/utility/pair/make_pair) is also included,
 
 ```c++
-	const auto s = make_DelayedConstructor(42);
+	const auto s = makeDelayedConstructor(42);
     s.get(); // Returns 42
 ```
 
