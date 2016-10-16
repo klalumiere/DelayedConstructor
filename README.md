@@ -1,10 +1,10 @@
-# StaticConstructor
+# DelayedConstructor
 
-[![Build Status](https://travis-ci.org/klalumiere/StaticConstructor.svg?branch=master)](https://travis-ci.org/klalumiere/StaticConstructor/)
+[![Build Status](https://travis-ci.org/klalumiere/DelayedConstructor.svg?branch=master)](https://travis-ci.org/klalumiere/DelayedConstructor/)
 
 C++11 class that defers the *construction* of an object while still using *automatic* memory allocation (i.e. the stack). In other words, this class is a simplified, single-object stack allocator.
 
-To use this class, simply download or copy-paste [the main header file](https://github.com/klalumiere/StaticConstructor/blob/master/include/StaticConstructor.h) and include it in your project.
+To use this class, simply download or copy-paste [the main header file](https://github.com/klalumiere/DelayedConstructor/blob/master/include/DelayedConstructor.h) and include it in your project.
 
 ## Rationale
 
@@ -18,10 +18,10 @@ In c++, the typical way to control *when* an object is built and destroyed is to
 	ptr.reset();
 ```
 
-Unfortunately, pointers do not come with value semantics. Moreover, it is usually more efficient, for small objects, to use automatic allocated memory (the *stack*) than dynamic allocated memory (the *heap*). **StaticConstructor** aims to solve these problems. It is straightforward to use,
+Unfortunately, pointers do not come with value semantics. Moreover, it is usually more efficient, for small objects, to use automatic allocated memory (the *stack*) than dynamic allocated memory (the *heap*). **DelayedConstructor** aims to solve these problems. It is straightforward to use,
 
 ```c++
-	StaticConstructor<const int> s;
+	DelayedConstructor<const int> s;
 	/** Do some stuff **/
     s.construct(5);
 	/** Do some other stuff **/
@@ -41,11 +41,11 @@ Internally, it uses automatic allocated memory and placement new operator as mem
     typename std::add_pointer<Type>::type data = nullptr;
 ```
 
-Since **StaticConstructor** can contain an object *or not*, it can be seen as a lightweight version of [Boost Optional](http://www.boost.org/doc/libs/1_61_0/libs/optional/doc/html/index.html),
+Since **DelayedConstructor** can contain an object *or not*, it can be seen as a lightweight version of [Boost Optional](http://www.boost.org/doc/libs/1_61_0/libs/optional/doc/html/index.html),
 
 ```c++
-	const StaticConstructor<const int> s0{};
-	const StaticConstructor<const int> s1{42};
+	const DelayedConstructor<const int> s0{};
+	const DelayedConstructor<const int> s1{42};
 	s0.isConstructed(); // Returns false
 	s1.isConstructed(); // Returns true
 ```
@@ -53,7 +53,7 @@ Since **StaticConstructor** can contain an object *or not*, it can be seen as a 
 It is important to notice that **it is not mandatory to call the destruct() function** when an object has been constructed. In the example above, the destructor of **const int** will be called automatically when **s1** reaches the end of its scope. If you were to call **s1.destruct()** explicitly, nothing would happen at the end of the scope of **s1** so that the destructor of **const int** is always called once and only once, just like it is with value semantics objects,
 
 ```c++
-	~StaticConstructor() {
+	~DelayedConstructor() {
         destruct();
     }
     /** ... **/
@@ -66,10 +66,10 @@ It is important to notice that **it is not mandatory to call the destruct() func
 A factory function similar to [std::make_pair](http://en.cppreference.com/w/cpp/utility/pair/make_pair) is also included,
 
 ```c++
-	const auto s = make_StaticConstructor(42);
+	const auto s = make_DelayedConstructor(42);
     s.get(); // Returns 42
 ```
 
-Errors are handled using *cassert*. For more information, look at [the unit tests (Google Test)](https://github.com/klalumiere/StaticConstructor/blob/master/src/StaticConstructor_tests.cpp) or at the [class source](https://github.com/klalumiere/StaticConstructor/blob/master/include/StaticConstructor.h).
+Errors are handled using *cassert*. For more information, look at [the unit tests (Google Test)](https://github.com/klalumiere/DelayedConstructor/blob/master/src/DelayedConstructor_tests.cpp) or at the [class source](https://github.com/klalumiere/DelayedConstructor/blob/master/include/DelayedConstructor.h).
 
 [Discussion about this class on reddit](https://www.reddit.com/r/cpp/comments/56pccl/c11_class_that_defers_the_construction_of_an/)

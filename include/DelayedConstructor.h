@@ -28,30 +28,30 @@ SOFTWARE. */
 #include <type_traits>
 
 template<class Type>
-class StaticConstructor {
+class DelayedConstructor {
 public:
-    StaticConstructor() = default;
-    template<class FirstArgumentType, typename std::enable_if<!std::is_same<StaticConstructor<Type>,
+    DelayedConstructor() = default;
+    template<class FirstArgumentType, typename std::enable_if<!std::is_same<DelayedConstructor<Type>,
             typename std::remove_cv<typename std::remove_reference<FirstArgumentType>::type>::type>::value,
         bool>::type = true, typename... Args>
-    explicit StaticConstructor(FirstArgumentType&& x, Args&&... args)
+    explicit DelayedConstructor(FirstArgumentType&& x, Args&&... args)
     { construct(std::forward<FirstArgumentType>(x),std::forward<Args>(args)...); }
-    StaticConstructor(const StaticConstructor<Type> &rhs) {
+    DelayedConstructor(const DelayedConstructor<Type> &rhs) {
         if(rhs.isConstructed()) construct(*rhs.data);
     }
-    StaticConstructor(StaticConstructor<Type> &&rhs) {
+    DelayedConstructor(DelayedConstructor<Type> &&rhs) {
         if(rhs.isConstructed()) construct(std::move(*rhs.data));
     }
-    ~StaticConstructor() {
+    ~DelayedConstructor() {
         destruct();
     }
-    StaticConstructor &operator=(const StaticConstructor<Type> &rhs) {
+    DelayedConstructor &operator=(const DelayedConstructor<Type> &rhs) {
         if(&rhs == this) return *this;
         destruct();
         if(rhs.isConstructed()) construct(*rhs.data);
         return *this;
     }
-    StaticConstructor &operator=(StaticConstructor<Type> &&rhs) {
+    DelayedConstructor &operator=(DelayedConstructor<Type> &&rhs) {
         if(&rhs == this) return *this;
         destruct();
         if(rhs.isConstructed()) construct(std::move(*rhs.data));
@@ -80,8 +80,8 @@ private:
 };
 
 template<class Type, typename... Args>
-inline StaticConstructor<Type> make_StaticConstructor(Args&&... args) {
-    return StaticConstructor<Type>{std::forward<Args>(args)...};
+inline DelayedConstructor<Type> make_DelayedConstructor(Args&&... args) {
+    return DelayedConstructor<Type>{std::forward<Args>(args)...};
 }
 
 #endif  /* STATICCONSTRUCTOR_H */
