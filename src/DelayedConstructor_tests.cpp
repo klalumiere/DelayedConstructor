@@ -1,6 +1,8 @@
 #include <atomic>
-#include "gtest/gtest.h"
-#include "DelayedConstructor.h"
+#include <gtest/gtest.h>
+#include <DelayedConstructor/DelayedConstructor.h>
+
+using namespace DelayedConstructor;
 
 class DelayedConstructorTests : public ::testing::Test {
 public:

@@ -2,12 +2,16 @@ cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 project(DelayedConstructor LANGUAGES CXX)
 
-if("${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_SOURCE_DIR}")
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME) # !IsSubproject()
     find_package(GTest)
     if(GTEST_FOUND)
         enable_testing()
     endif()
 endif()
 
-include_directories(include)
-add_subdirectory(src)
+if(NOT TARGET DelayedConstructor)
+    add_library(DelayedConstructor INTERFACE)
+    target_include_directories(DelayedConstructor INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>)
+endif()
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/src)

@@ -23,13 +23,13 @@ matrix:
     - os: linux
       compiler: clang
       env:
-        - COMPILER=clang
+        - COMPILER=clang++
         - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Linux-x86_64
         - BIN_LOCATION_CMAKE=bin
     - os: osx
       compiler: clang
       env:
-        - COMPILER=clang
+        - COMPILER=clang++
         - ARCHIVE_NAME_CMAKE=cmake-3.6.2-Darwin-x86_64
         - BIN_LOCATION_CMAKE=CMake.app/Contents/bin
 

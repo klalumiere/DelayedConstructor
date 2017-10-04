@@ -27,6 +27,8 @@ SOFTWARE. */
 #include <utility>
 #include <type_traits>
 
+namespace DelayedConstructor {
+
 template<class Type>
 class DelayedConstructor {
 public:
@@ -83,5 +85,7 @@ template<class Type, typename... Args>
 inline DelayedConstructor<Type> makeDelayedConstructor(Args&&... args) {
     return DelayedConstructor<Type>{std::forward<Args>(args)...};
 }
+
+} // DelayedConstructor
 
 #endif  /* DELAYEDCONSTRUCTOR_H */
