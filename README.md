@@ -4,7 +4,7 @@
 
 C++11 class that defers the *construction* of an object while still using *automatic* memory allocation (i.e. the stack). In other words, this class is a simplified, single-object stack allocator.
 
-To use this class, simply download or copy-paste [the main header file](https://github.com/klalumiere/DelayedConstructor/blob/master/include/DelayedConstructor.h) and include it in your project.
+To use this class, simply download or copy-paste [the main header file](https://github.com/klalumiere/DelayedConstructor/blob/master/include/DelayedConstructor/DelayedConstructor.h) and include it in your project.
 
 ## Rationale
 
