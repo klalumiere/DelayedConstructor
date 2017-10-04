@@ -66,7 +66,7 @@ void destruct() {
 A factory function similar to [std::make_pair](http://en.cppreference.com/w/cpp/utility/pair/make_pair) is also included,
 
 ```c++
-const auto s = makeDelayedConstructor(42);
+const auto s = createDelayedConstructor(42);
 s.get(); // Returns 42
 ```
 
